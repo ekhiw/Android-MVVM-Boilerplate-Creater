@@ -527,6 +527,58 @@ object DatabaseModule {
 }
 EOF
 
+cd $1
+mkdir ui
+cd ui/
+mkdir view
+mkdir viewmodel
+cd viewmodel/
+cat << EOF >> MainViewModel.kt
+package $3.ui.viewmodel
+
+import $3.data.repository.MainRepository
+import $3.utils.DispatcherProvider
+import $3.utils.Resource
+
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.orhanobut.logger.Logger
+import kotlinx.coroutines.launch
+
+class MainViewModel @ViewModelInject constructor(
+    private val repository: MainRepository,
+    private val dispatchers: DispatcherProvider
+): ViewModel() {
+
+    fun getChuckNorris(){
+        viewModelScope.launch(dispatchers.io){
+            when(val response = repository.getChuck()){
+                is Resource.Error ->
+                    Logger.i("")
+                is Resource.Success -> {
+                    Logger.i("response ${response.data}")
+                }
+            }
+
+        }
+    }
+
+    fun testDatabase(){
+        viewModelScope.launch(dispatchers.io) {
+            repository.testDatabase()
+        }
+    }
+
+    fun testRead() {
+        viewModelScope.launch(dispatchers.io){
+            repository.testRead()
+        }
+    }
+
+}
+EOF
+
 echo
 echo "----------DONE!----------"
 
