@@ -311,8 +311,6 @@ interface MainRepository {
     suspend fun testRead()
 }
 EOF
-cd $1
-cd data/repository/
 cat << EOF >> DefaultMainRepository.kt
 package $3.data.repository
 
@@ -330,8 +328,7 @@ import javax.inject.Inject
 class DefaultMainRepository @Inject constructor(
     private val api: ChuckApi,
     private val tokenDao: TokenDao,
-    private val appCustomDao: AppCustomDao
-) : MainRepository {
+    private val appCustomDao: AppCustomDao) : MainRepository {
 
     override suspend fun getChuck(): Resource<ChuckResponse> {
         return try {
@@ -353,11 +350,9 @@ class DefaultMainRepository @Inject constructor(
 
     override suspend fun testRead(){
         tokenDao.getToken("1").collect {
-            Logger.i("response ${it.time}")
+
         }
     }
-
-
 }
 EOF
 cd ../
@@ -561,9 +556,9 @@ class MainViewModel @ViewModelInject constructor(
         viewModelScope.launch(dispatchers.io){
             when(val response = repository.getChuck()){
                 is Resource.Error ->
-                    Logger.i("")
+                
                 is Resource.Success -> {
-                    Logger.i("response ${response.data}")
+                    
                 }
             }
 
