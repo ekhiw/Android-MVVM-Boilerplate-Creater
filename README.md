@@ -4,7 +4,7 @@
 # Android MVVM Boilerplate Creater
 A script that creates the files and codes in them for android MVVM architecture in kotlin.
 
-<img src="https://img.shields.io/badge/Version-v1.3.1-green" /> <img src="https://img.shields.io/badge/License-MIT-blue" />
+<img src="https://img.shields.io/badge/Version-ekhiw-green" /> <img src="https://img.shields.io/badge/License-MIT-blue" />
 
 [Android-MVVM-Boilerplate-Creater - behind the scenes](https://proandroiddev.com/android-mvvm-boilerplate-creater-behind-the-scenes-1184e6d26fd3)
 
@@ -58,7 +58,139 @@ Boom! you're done.
     └── ChuckNorrisApplication.kt
 ```
 ### Dependencies
+App level
+```
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+apply plugin: 'kotlin-android'
 
+
+android {
+    .
+    .
+    .
+    .
+    .
+    
+    buildFeatures {
+        viewBinding true
+    }
+    buildTypes {
+        debug {
+            .
+            .
+            .
+            .
+            .
+            
+            buildConfigField "String", "BASE_URL", "\"https://api.chucknorris.io/\""
+            buildConfigField "Boolean", "DEBUG_BUILD", "true"
+        }
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    def deps = rootProject.ext.deps
+
+    //Androidx
+    implementation deps.androidx.ACTIVITY_KTX 
+    implementation deps.androidx.APP_COMPAT 
+    implementation deps.androidx.CORE_KTX 
+    implementation deps.androidx.CONSTRAINT_LAYOUT 
+
+    implementation deps.androidx.LIFECYCLE_VIEWMODEL 
+    implementation deps.androidx.LIFECYCLE_RUNTIME 
+    implementation deps.androidx.LIFECYCLE_EXTENSIONS 
+    implementation deps.androidx.LIFECYCLE_LIVEDATA 
+
+    implementation deps.androidx.HILT_LIFECYCLE_VM 
+    kapt deps.androidx.HITL_COMPILER 
+
+    implementation deps.dagger.HILT_ANDROID 
+    kapt deps.dagger.HILT_ANDROID_COMPILER 
+
+    // Room
+    kapt deps.androidx.ROOM_COMPILER
+    implementation deps.androidx.ROOM_RUNTIME
+    implementation deps.androidx.ROOM_KTX
+    implementation deps.androidx.WORK_RUNTIME
+
+    //misc
+    implementation deps.misc.MATERIAL_DESIGN 
+    implementation deps.misc.ORHANOBUT
+
+    //Kotlin
+    implementation deps.kotlinlib.STD_LIB 
+    implementation deps.kotlinlib.COROUTINES_CORE 
+    implementation deps.kotlinlib.COROUTINES_ANDROID 
+
+    // Retrofit
+    implementation deps.square.LOGGING_INTERCEPTOR
+    implementation deps.square.OKHTTP 
+    implementation deps.square.RETROFIT 
+    implementation deps.square.RETROFIT_MOSHI
+    implementation deps.square.RETROFIT_GSON 
+
+    // Glide
+    kapt deps.glide.GLIDE_COMPILER
+    implementation deps.glide.GLIDE
+
+    // Chucker
+    debugImplementation deps.chucker.CHUCKER_DEBUG
+    releaseImplementation deps.chucker.CHUCKER_NO_OP_RELEASE
+}
+
+repositories {
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
+}
+
+```
+
+Project Level
+```
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+apply from: 'dependencies.gradle'
+
+buildscript {
+
+    ext {
+        kotlin_version = "1.4.31"
+    }
+
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.1.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.31.2-alpha"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+```
 
 
 ### Usage
