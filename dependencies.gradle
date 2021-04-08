@@ -1,0 +1,105 @@
+
+def v = [
+        COMPOSE_VERSION: "1.0.0-alpha08",
+        HILT_VERSION : "1.0.0-alpha02",
+        HILT_ANDROID_VERSION : "2.28.3-alpha",
+        KOTLIN_VERSION : "1.4.20",
+        COROUTINES_VERSION : "1.3.7",
+        RETROFIT_VERSION : "2.9.0",
+        CHUCKER_VERSION : "3.4.0",
+        GLIDE_VERSION : "4.11.0",
+        WORK_VERSION : "2.5.0",
+        OKHTTP_VERSION : "4.9.1",
+        ROOM_VERSION : "2.2.6"
+]
+
+def androidx = [
+        ACTIVITY_KTX :          "androidx.activity:activity-ktx:1.1.0",
+        APP_COMPAT :            "androidx.appcompat:appcompat:1.2.0",
+        CORE_KTX :              "androidx.core:core-ktx:1.3.0",
+        CONSTRAINT_LAYOUT :     "androidx.constraintlayout:constraintlayout:1.1.3",
+        LIFECYCLE_VIEWMODEL :   "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0",
+        LIFECYCLE_RUNTIME :     "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0",
+        LIFECYCLE_EXTENSIONS :  "androidx.lifecycle:lifecycle-extensions:2.2.0",
+        LIFECYCLE_LIVEDATA :    "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0",
+
+        COMPOSE_UI :            "androidx.compose.ui:ui:${v.COMPOSE_VERSION}",
+        COMPOSE_MATERIAL :      "androidx.compose.material:material:${v.COMPOSE_VERSION}",
+        COMPOSE_TOOLING :       "androidx.compose.ui:ui-tooling:${v.COMPOSE_VERSION}",
+        COMPOSE_TESTING :       "androidx.compose.ui:ui-test:${v.COMPOSE_VERSION}",
+
+        HILT_LIFECYCLE_VM:      "androidx.hilt:hilt-lifecycle-viewmodel:${v.HILT_VERSION}",
+        HILT_WORK :             "androidx.hilt:hilt-work:${v.HILT_VERSION}",
+        HITL_COMPILER :         "androidx.hilt:hilt-compiler:${v.HILT_VERSION}",
+
+        ROOM_COMPILER : "androidx.room:room-compiler:${v.ROOM_VERSION}",
+        ROOM_RUNTIME : "androidx.room:room-runtime:${v.ROOM_VERSION}",
+        ROOM_KTX : "androidx.room:room-ktx:${v.ROOM_VERSION}",
+
+        WORK_RUNTIME : "androidx.work:work-runtime-ktx:${v.WORK_VERSION}"
+]
+
+def misc = [
+        MATERIAL_DESIGN :       "com.google.android.material:material:1.1.0",
+        ORHANOBUT :             "com.orhanobut:logger:2.2.0",
+        DEXTER :                "com.karumi:dexter:6.2.2"
+]
+
+def dagger = [
+        HILT_ANDROID :          "com.google.dagger:hilt-android:${v.HILT_ANDROID_VERSION}",
+        HILT_ANDROID_COMPILER : "com.google.dagger:hilt-android-compiler:${v.HILT_ANDROID_VERSION}",
+        HILT_ANDROID_GRADLE :   "com.google.dagger:hilt-android-gradle-plugin:${v.HILT_ANDROID_VERSION}",
+
+        HILT_ANDROID_TESTING :  "com.google.dagger:hilt-android-testing:${v.HILT_ANDROID_VERSION}"
+]
+
+def kotlinlib = [
+        STD_LIB :               "org.jetbrains.kotlin:kotlin-stdlib:${v.KOTLIN_VERSION}",
+        KOTLIN_GRADLE :         "org.jetbrains.kotlin:kotlin-gradle-plugin:${v.KOTLIN_VERSION}",
+
+        COROUTINES_TEST :       "org.jetbrains.kotlinx:kotlinx-coroutines-test:${v.COROUTINES_VERSION}",
+        COROUTINES_CORE :       "org.jetbrains.kotlinx:kotlinx-coroutines-core:${v.COROUTINES_VERSION}",
+        COROUTINES_ANDROID :    "org.jetbrains.kotlinx:kotlinx-coroutines-android:${v.COROUTINES_VERSION}"
+]
+
+def square = [
+//        LEAK_CANARY :           "com.squareup.leakcanary:leakcanary-android:2.4",
+LOGGING_INTERCEPTOR :   "com.squareup.okhttp3:logging-interceptor:${v.OKHTTP_VERSION}",
+OKHTTP :                "com.squareup.okhttp3:okhttp:${v.OKHTTP_VERSION}",
+RETROFIT :              "com.squareup.retrofit2:retrofit:${v.RETROFIT_VERSION}",
+RETROFIT_MOSHI :        "com.squareup.retrofit2:converter-moshi:${v.RETROFIT_VERSION}",
+RETROFIT_GSON :         "com.squareup.retrofit2:converter-gson:${v.RETROFIT_VERSION}"
+]
+
+def test = [
+        ARCH_CORE :             "androidx.arch.core:core-testing:2.1.0",
+        CORE_TEST :             "androidx.test:core-ktx:1.2.0",
+        JUNIT :                 "junit:junit:4.13",
+        ROBOELECTRIC :          "org.robolectric:robolectric:4.3",
+
+        EXT_JUNIT :             "androidx.test.ext:junit-ktx:1.1.1",
+        ESPRESSO_CORE :         "androidx.test.espresso:espresso-core:3.2.0",
+]
+
+def chucker = [
+        CHUCKER_DEBUG :         "com.github.chuckerteam.chucker:library:${v.CHUCKER_VERSION}",
+        CHUCKER_NO_OP_RELEASE : "com.github.chuckerteam.chucker:library-no-op:${v.CHUCKER_VERSION}"
+]
+
+def glide = [
+        GLIDE_COMPILER : "com.github.bumptech.glide:compiler:${v.GLIDE_VERSION}",
+        GLIDE : "com.github.bumptech.glide:glide:${v.GLIDE_VERSION}",
+]
+
+
+ext.deps = [
+        "v" : v,
+        "androidx" : androidx,
+        "misc" :misc,
+        "dagger" : dagger,
+        "kotlinlib" :kotlinlib,
+        "square" : square,
+        "test" :test,
+        "chucker" : chucker,
+        "glide" : glide
+]
