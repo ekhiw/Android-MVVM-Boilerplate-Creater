@@ -113,7 +113,6 @@ if [[ -z "$3" ]]
 		exit 1
 fi
 
-
 #########################################################
 # FILES CREATION					#
 #########################################################
@@ -312,6 +311,8 @@ interface MainRepository {
     suspend fun testRead()
 }
 EOF
+cd $1
+cd data/repository/
 cat << EOF >> DefaultMainRepository.kt
 package $3.data.repository
 
@@ -359,6 +360,7 @@ class DefaultMainRepository @Inject constructor(
 
 }
 EOF
+cd ../
 mkdir worker
 cd worker/
 cat << EOF >> AppCustomPresetWorker.kt
@@ -531,8 +533,12 @@ cd $1
 mkdir ui
 cd ui/
 mkdir view
+
+cd $1
+cd ui/
 mkdir viewmodel
 cd viewmodel/
+
 cat << EOF >> MainViewModel.kt
 package $3.ui.viewmodel
 
@@ -576,6 +582,49 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
+}
+EOF
+
+cd $1
+mkdir utils
+cd utils/
+cat << EOF >> DispatcherProvider.kt
+package $3.utils
+
+import kotlinx.coroutines.CoroutineDispatcher
+
+interface DispatcherProvider {
+    val main: CoroutineDispatcher
+    val io: CoroutineDispatcher
+    val default: CoroutineDispatcher
+    val unconfined: CoroutineDispatcher
+}
+EOF
+cat << EOF >> Resource.kt
+package $3.utils
+
+sealed class Resource<T>(val data: T?, val message: String?) {
+    class Success<T>(data: T) : Resource<T>(data, null)
+    class Error<T>(message: String) : Resource<T>(null, message)
+}
+EOF
+
+cd $1
+cat << EOF >> $2Aplication.kt
+package $3
+
+import android.app.Application
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class $2Aplication  : Application(){
+    override fun onCreate() {
+        super.onCreate()
+        Logger.addLogAdapter(AndroidLogAdapter())
+        Logger.i("APP OnCreate")
+    }
 }
 EOF
 
