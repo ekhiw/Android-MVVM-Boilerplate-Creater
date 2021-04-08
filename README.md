@@ -18,21 +18,11 @@ A script that creates the files and codes in them for android MVVM architecture 
 - [x] Dependencies and suggestions after boilerplate created.
 
 ### Steps to run
-(tested on linux)
+(tested on mac)
 
-METHOD 1:
-* Go to the release space [here](https://github.com/thenishchalraj/Android-MVVM-Boilerplate-Creater/releases)
-* Download suitable Asset
-* Extract it
-* Move into the directory
-* Modify the file permission (if applicable)
-* Run according to the usage
-
-METHOD 2:
-* `git clone https://github.com/thenishchalraj/Android-MVVM-Boilerplate-Creater.git`
+* `git clone https://github.com/ekhiw/Android-MVVM-Boilerplate-Creater.git`
 * `cd Android-MVVM-Boilerplate-Creater`
-* `chmod +x ./mvvm_creater.sh`
-* (for demo) `./mvvm_creater.sh ~/testing_dir Weather com.example.weatherapp`
+* (for demo) `./mvvm_creater.sh ~/directory ChuckNorris com.example.chucknorris`
 
 Boom! you're done.
 
@@ -40,36 +30,36 @@ Boom! you're done.
 ```
 .
 └── data/
-    ├── api/
-    │   ├── MainApi.kt
-    │   └── MainDataSource.kt
-    ├── model/
-    │   └── SomeModel.kt
-    ├── repository/
-    │   └── MainRepository.kt
+    ├── data/
+    │   ├── api/
+    |   |   └── ChuckApi.kt
+    │   ├── model/
+    |   |   ├── AppCustomPreset.kt
+    |   |   ├── ChuckResponse.kt
+    |   |   └── UserToken.kt
+    │   ├── repository/
+    |   |   ├── MainRepository.kt
+    |   |   └── DefaultMainRepository.kt
+    │   ├── worker/
+    |   |   └── AppCustomPresetWorker.kt
+    │   ├── AppCustomDao.kt
+    │   ├── TokenDao.kt
+    │   └── AppDatabase.kt
     ├── di/
-    │   ├── base/
-    │   │   ├── AppComponent.kt
-    │   │   ├── AppModule.kt
-    │   │   ├── ViewModelFactoryModule.kt
-    │   │   ├── ViewModelKey.kt
-    │   │   └── ViewModelModule.kt
-    │   ├── ActivityBuildersModule.kt
-    │   └── MainModule.kt
+    |   ├── AppModule.kt
+    |   └── DatabaseModule.kt
     ├── ui/
-    │   ├── base/
-    │   │   └── ViewModelFactory.kt
-    │   └── main/
-    │       ├── view
-    │       └── viewmodel/
-    │           └── MainViewModel.kt
+    │   ├── view/
+    │   └── viewmodel/
+    │       └── MainViewModel.kt
     ├── utils/
-    │   ├── Endpoints.kt
-    │   ├── ISTDateDeserializer.kt
     │   ├── Resource.kt
-    │   └── Status.kt
-    └── WeatherApplication.kt
+    │   └── DispatcherProvider.kt
+    └── ChuckNorrisApplication.kt
 ```
+### Dependencies
+
+
 
 ### Usage
 * -h (shows help)
@@ -77,19 +67,11 @@ Boom! you're done.
 * -d (shows used dependencies)
 * arguments 1, 2, 3 (path-to-directory, base application name, application package name)
 
-### ToDos
-- [ ] Make the script compact/optimized
-- [ ] Different scripts for different architecture (MVP, MVC, Full-Modular or some best techniques)
-- [ ] Make and test its working on windows & mac
-
 ### References
 * [Bash Cheatsheet](https://devhints.io/bash)
 * [Shell Scripting](https://tecadmin.net/tutorial/bash-scripting/)
 * [Functions in Bash](https://linuxize.com/post/bash-functions/)
 * [Exit in Bash](https://askubuntu.com/questions/892604/what-is-the-meaning-of-exit-0-exit-1-and-exit-2-in-a-bash-script)
-
-### Contribution
-Fork the repository, either do your own improvements or pick something from the ToDos or Issues and start a PR to the `dev` branch after successful testing.
 
 ### License
 Read the license [here](https://github.com/thenishchalraj/Android-MVVM-Boilerplate-Creater/blob/main/LICENSE)
