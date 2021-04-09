@@ -29,7 +29,7 @@ Boom! you're done.
 #### Packages and files that are created
 ```
 .
-└── data/
+└── app/
     ├── data/
     │   ├── api/
     |   |   └── ChuckApi.kt
