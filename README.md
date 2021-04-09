@@ -22,7 +22,8 @@ A script that creates the files and codes in them for android MVVM architecture 
 
 * `git clone https://github.com/ekhiw/Android-MVVM-Boilerplate-Creater.git`
 * `cd Android-MVVM-Boilerplate-Creater`
-* (for demo) `./mvvm_creater.sh ~/directory ChuckNorris com.example.chucknorris`
+* `copy your app path (/Users/...../app/src/main/java/com/example/chucknorris)
+* (for demo) `./mvvm_creater.sh ~/app-directory ChuckNorris com.example.chucknorris`
 
 Boom! you're done.
 
