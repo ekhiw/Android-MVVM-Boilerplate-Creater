@@ -287,8 +287,8 @@ package $3.data.repository
 
 import $3.data.AppCustomDao
 import $3.data.TokenDao
-import $3.api.ChuckApi
-import $3.ChuckResponse
+import $3.data.api.ChuckApi
+import $3.data.model.ChuckResponse
 import $3.data.model.UserToken
 import $3.utils.Resource
 
@@ -526,8 +526,9 @@ class MainViewModel @ViewModelInject constructor(
     fun getChuckNorris(){
         viewModelScope.launch(dispatchers.io){
             when(val response = repository.getChuck()){
-                is Resource.Error ->
-                
+                is Resource.Error ->{
+
+                }
                 is Resource.Success -> {
                     
                 }
