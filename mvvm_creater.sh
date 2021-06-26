@@ -429,7 +429,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideCurrencyApi(okHttpClient: OkHttpClient): ChuckApi = Retrofit.Builder()
+    fun provideChuckApi(okHttpClient: OkHttpClient): ChuckApi = Retrofit.Builder()
         .client(okHttpClient)
         .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -518,7 +518,8 @@ import androidx.lifecycle.viewModelScope
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.launch
 
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val repository: MainRepository,
     private val dispatchers: DispatcherProvider
 ): ViewModel() {
