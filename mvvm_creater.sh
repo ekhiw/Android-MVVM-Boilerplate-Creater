@@ -494,6 +494,16 @@ object DatabaseModule {
     }
 }
 EOF
+cat << EOF >> MyAppGlideModule.kt
+package $3.di
+
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
+
+@GlideModule
+class MyAppGlideModule : AppGlideModule(){
+}
+EOF
 
 cd $1
 mkdir ui
