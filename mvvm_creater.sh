@@ -39,8 +39,9 @@ suggestions(){
 # DEPENDENCIES						#
 #########################################################
 dependencies(){
+
 	echo "_________________________________________________________________________"
-	echo "| DEPENDENCIES                                                          |"
+	echo "| ADD dependencies.gradle                                               |"
 	echo "|_______________________________________________________________________|"
 
 }
@@ -48,57 +49,94 @@ dependencies(){
 #########################################################
 # OPTIONS CONDITIONS					#
 #########################################################
-if [[ "$1" == "-h" ]]
-	then
-		help
-		exit 0
-fi
+# if [[ "$1" == "-h" ]]
+# 	then
+# 		help
+# 		exit 0
+# fi
 
-if [[ "$1" == "-s" ]]
-	then
-		suggestions
-		exit 0
-fi
+# if [[ "$1" == "-s" ]]
+# 	then
+# 		suggestions
+# 		exit 0
+# fi
 
-if [[ "$1" == "-d" ]]
-	then
-		dependencies
-		exit 0
-fi
+# if [[ "$1" == "-d" ]]
+# 	then
+# 		dependencies
+# 		exit 0
+# fi
 
-if [[ -z "$1" ]]
-	then
-		printf "Missing directory path!\nFiles can't be created!\nEXITING..."
-		exit 1
-fi
+# if [[ -z "$1" ]]
+# 	then
+# 		printf "Missing directory path!\nFiles can't be created!\nEXITING..."
+# 		exit 1
+# fi
 
-if [[ -z "$2" ]]
-	then
-		printf "Missing base application name!\nRun again with name like:\nWeather,\nToDo,\nGrocery\nEXITING..."
-		exit 1
-fi
+# if [[ -z "$2" ]]
+# 	then
+# 		printf "Missing base application name!\nRun again with name like:\nWeather,\nToDo,\nGrocery\nEXITING..."
+# 		exit 1
+# fi
 
-if [[ -z "$3" ]]
-	then
-		printf "Missing package name!\nRun again!\nEXITING..."
-		exit 1
-fi
+# if [[ -z "$3" ]]
+# 	then
+# 		printf "Missing package name!\nRun again!\nEXITING..."
+# 		exit 1
+# fi
+echo "========================="
+echo "| Kotlin MVVM generator |"
+echo "========================="
+echo "What is your app name?"
+read _APP_NAME
+
+str1="$_APP_NAME"
+str2="Application.kt"
+str3="$str1$str2"
+echo $str3
+
+str2a="Application"
+str3a="$str1$str2a"
+echo $str3a
+
+echo "======================="
+echo "your app name $_APP_NAME"
+echo "======================="
+echo "Your package?"
+read _APP_PACKAGE
+echo "======================="
+echo "your app package $_APP_PACKAGE"
+echo "======================="
+echo "Copy your app MainActivity directory"
+read _APP_DIR
+echo "======================="
+echo "your app dir $_APP_DIR"
+echo "======================="
+echo "Copy your app Parent directory"
+read _APP_DIR_PARENT
+echo "======================="
+echo "your parent dir $_APP_DIR_PARENT"
+echo "======================="
 
 #########################################################
 # FILES CREATION					#
 #########################################################
-echo "Creating MVVM Files in " $1
+echo "Creating dependencies.gradle " $_APP_DIR_PARENT
 
-cd $1
+cp dependencies.gradle $_APP_DIR_PARENT
+
+echo "Creating MVVM Files in " $_APP_DIR
+
+cd $_APP_DIR
 
 mkdir data
 cd data/
 mkdir api
 cd api/
 cat << EOF >> ChuckApi.kt
-package $3.data.api
+package $_APP_PACKAGE.data.api
 
-import $3.data.model.ChuckResponse
+import $_APP_PACKAGE.data.model.ChuckResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
@@ -112,9 +150,9 @@ interface ChuckApi {
 EOF
 cd ../
 cat << EOF >> AppCustomDao.kt
-package $3.data
+package $_APP_PACKAGE.data
 
-import $3.data.model.AppCustomPreset
+import $_APP_PACKAGE.data.model.AppCustomPreset
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -142,9 +180,9 @@ interface AppCustomDao {
 }
 EOF
 cat << EOF >> TokenDao.kt
-package $3.data
+package $_APP_PACKAGE.data
 
-import $3.data.model.UserToken
+import $_APP_PACKAGE.data.model.UserToken
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -166,11 +204,11 @@ interface TokenDao {
 }
 EOF
 cat << EOF >> AppDatabase.kt
-package $3.data
+package $_APP_PACKAGE.data
 
-import $3.data.model.AppCustomPreset
-import $3.data.model.UserToken
-import $3.data.worker.AppCustomPresetWorker
+import $_APP_PACKAGE.data.model.AppCustomPreset
+import $_APP_PACKAGE.data.model.UserToken
+import $_APP_PACKAGE.data.worker.AppCustomPresetWorker
 
 import android.content.Context
 import androidx.room.Database
@@ -222,7 +260,7 @@ EOF
 mkdir model
 cd model/
 cat << EOF >> AppCustomPreset.kt
-package $3.data.model
+package $_APP_PACKAGE.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -241,7 +279,7 @@ data class AppCustomPreset(
 )
 EOF
 cat << EOF >> ChuckResponse.kt
-package $3.data.model
+package $_APP_PACKAGE.data.model
 
 data class ChuckResponse(
     val icon_url: String,
@@ -251,7 +289,7 @@ data class ChuckResponse(
 )
 EOF
 cat << EOF >> UserToken.kt
-package $3.data.model
+package $_APP_PACKAGE.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -268,10 +306,10 @@ cd ../
 mkdir repository
 cd repository/
 cat << EOF >> MainRepository.kt
-package $3.data.repository
+package $_APP_PACKAGE.data.repository
 
-import $3.data.model.ChuckResponse
-import $3.utils.Resource
+import $_APP_PACKAGE.data.model.ChuckResponse
+import $_APP_PACKAGE.utils.Resource
 
 interface MainRepository {
 
@@ -283,14 +321,14 @@ interface MainRepository {
 }
 EOF
 cat << EOF >> DefaultMainRepository.kt
-package $3.data.repository
+package $_APP_PACKAGE.data.repository
 
-import $3.data.AppCustomDao
-import $3.data.TokenDao
-import $3.data.api.ChuckApi
-import $3.data.model.ChuckResponse
-import $3.data.model.UserToken
-import $3.utils.Resource
+import $_APP_PACKAGE.data.AppCustomDao
+import $_APP_PACKAGE.data.TokenDao
+import $_APP_PACKAGE.data.api.ChuckApi
+import $_APP_PACKAGE.data.model.ChuckResponse
+import $_APP_PACKAGE.data.model.UserToken
+import $_APP_PACKAGE.utils.Resource
 
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.flow.collect
@@ -330,10 +368,10 @@ cd ../
 mkdir worker
 cd worker/
 cat << EOF >> AppCustomPresetWorker.kt
-package $3.data.worker
+package $_APP_PACKAGE.data.worker
 
-import $3.data.AppDatabase
-import $3.data.model.AppCustomPreset
+import $_APP_PACKAGE.data.AppDatabase
+import $_APP_PACKAGE.data.model.AppCustomPreset
 
 import android.content.Context
 import androidx.work.CoroutineWorker
@@ -368,19 +406,19 @@ class AppCustomPresetWorker(
 }
 EOF
 
-cd $1
+cd $_APP_DIR
 mkdir di
 cd di/
 cat << EOF >> AppModule.kt
-package $3.di
+package $_APP_PACKAGE.di
 
-import $3.BuildConfig
-import $3.data.AppCustomDao
-import $3.data.TokenDao
-import $3.data.api.ChuckApi
-import $3.data.repository.DefaultMainRepository
-import $3.data.repository.MainRepository
-import $3.utils.DispatcherProvider
+import $_APP_PACKAGE.BuildConfig
+import $_APP_PACKAGE.data.AppCustomDao
+import $_APP_PACKAGE.data.TokenDao
+import $_APP_PACKAGE.data.api.ChuckApi
+import $_APP_PACKAGE.data.repository.DefaultMainRepository
+import $_APP_PACKAGE.data.repository.MainRepository
+import $_APP_PACKAGE.utils.DispatcherProvider
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
@@ -459,11 +497,11 @@ object AppModule {
 }
 EOF
 cat << EOF >> DatabaseModule.kt
-package $3.di
+package $_APP_PACKAGE.di
 
-import $3.data.AppCustomDao
-import $3.data.AppDatabase
-import $3.data.TokenDao
+import $_APP_PACKAGE.data.AppCustomDao
+import $_APP_PACKAGE.data.AppDatabase
+import $_APP_PACKAGE.data.TokenDao
 
 import android.content.Context
 import dagger.Module
@@ -495,7 +533,7 @@ object DatabaseModule {
 }
 EOF
 cat << EOF >> MyAppGlideModule.kt
-package $3.di
+package $_APP_PACKAGE.di
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
@@ -505,22 +543,22 @@ class MyAppGlideModule : AppGlideModule(){
 }
 EOF
 
-cd $1
+cd $_APP_DIR
 mkdir ui
 cd ui/
 mkdir view
 
-cd $1
+cd $_APP_DIR
 cd ui/
 mkdir viewmodel
 cd viewmodel/
 
 cat << EOF >> MainViewModel.kt
-package $3.ui.viewmodel
+package $_APP_PACKAGE.ui.viewmodel
 
-import $3.data.repository.MainRepository
-import $3.utils.DispatcherProvider
-import $3.utils.Resource
+import $_APP_PACKAGE.data.repository.MainRepository
+import $_APP_PACKAGE.utils.DispatcherProvider
+import $_APP_PACKAGE.utils.Resource
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -564,11 +602,11 @@ class MainViewModel @Inject constructor(
 }
 EOF
 
-cd $1
+cd $_APP_DIR
 mkdir utils
 cd utils/
 cat << EOF >> DispatcherProvider.kt
-package $3.utils
+package $_APP_PACKAGE.utils
 
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -580,7 +618,7 @@ interface DispatcherProvider {
 }
 EOF
 cat << EOF >> Resource.kt
-package $3.utils
+package $_APP_PACKAGE.utils
 
 sealed class Resource<T>(val data: T?, val message: String?) {
     class Success<T>(data: T) : Resource<T>(data, null)
@@ -588,9 +626,9 @@ sealed class Resource<T>(val data: T?, val message: String?) {
 }
 EOF
 
-cd $1
-cat << EOF >> $2Aplication.kt
-package $3
+cd $_APP_DIR
+cat << EOF >> $str3
+package $_APP_PACKAGE
 
 import android.app.Application
 import com.orhanobut.logger.AndroidLogAdapter
@@ -598,7 +636,7 @@ import com.orhanobut.logger.Logger
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class $2Aplication  : Application(){
+class $str3a  : Application(){
     override fun onCreate() {
         super.onCreate()
         Logger.addLogAdapter(AndroidLogAdapter())
@@ -608,11 +646,23 @@ class $2Aplication  : Application(){
 EOF
 
 echo 
-echo "----------DONE!----------"
-echo "goto https://github.com/ekhiw/Android-MVVM-Boilerplate-Creater/"
-echo "download dependencies.gradle add to project level directory"
+echo "===================DONE!==================="
+echo "===== 1. CHANGE YOUR MainActivity.kt ======"
+echo "@AndroidEntryPoint"
+echo "class MainActivity : AppCompatActivity() {"
+echo "    private lateinit var binding: ActivityMainBinding"
+echo ""
+echo "    override fun onCreate(savedInstanceState: Bundle?) {"
+echo "        super.onCreate(savedInstanceState)"
+echo "        binding = ActivityMainBinding.inflate(layoutInflater)"
+echo "        setContentView(binding.root)"
+echo "        supportActionBar?.hide()"
+echo "    }"
+echo "}"
+echo "============================================"
+echo "=== 2. CHANGE YOUR app name in Manifest ===="
+echo "android:name=\".$str3a\""
+echo "============================================"
+echo "============= 3. TODO ======================"
 echo "TODO : add navigation"
-
-dependencies
-
-suggestions
+echo "TODO : resolve dependencies"
