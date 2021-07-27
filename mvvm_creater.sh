@@ -93,11 +93,9 @@ read _APP_NAME
 str1="$_APP_NAME"
 str2="Application.kt"
 str3="$str1$str2"
-echo $str3
 
 str2a="Application"
 str3a="$str1$str2a"
-echo $str3a
 
 echo "======================="
 echo "your app name $_APP_NAME"
