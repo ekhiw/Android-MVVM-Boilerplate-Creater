@@ -87,7 +87,7 @@ dependencies(){
 echo "========================="
 echo "| Kotlin MVVM generator |"
 echo "========================="
-echo "What is your app name?"
+echo "What is your app name?(Without Space)"
 read _APP_NAME
 
 str1="$_APP_NAME"
