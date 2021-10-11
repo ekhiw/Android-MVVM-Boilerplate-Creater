@@ -1,17 +1,18 @@
 
 def v = [
         COMPOSE_VERSION: "1.0.0-alpha08",
-        HILT_ANDROID_VERSION : "2.37",
+        HILT_ANDROID_VERSION : "2.38.1",
         KOTLIN_VERSION : "1.5.21",
         LIFECYCLE_VERSION : "2.3.1",
         COROUTINES_VERSION : "1.3.7",
         RETROFIT_VERSION : "2.9.0",
         CHUCKER_VERSION : "3.5.0",
         GLIDE_VERSION : "4.12.0",
-        WORK_VERSION : "2.5.0",
+        WORK_VERSION : "2.6.0",
         OKHTTP_VERSION : "4.9.1",
         ROOM_VERSION : "2.3.0",
-        RECYCLER_VERSION : "1.2.1"
+        RECYCLER_VERSION : "1.2.1",
+        NAVIGATION_VERSION : "2.3.5"
 ]
 
 def androidx = [
@@ -35,18 +36,18 @@ def androidx = [
 
         WORK_RUNTIME : "androidx.work:work-runtime-ktx:${v.WORK_VERSION}",
 
-        RECYCLER_VIEW : "androidx.recyclerview:recyclerview:${v.RECYCLER_VERSION}"
+        RECYCLER_VIEW : "androidx.recyclerview:recyclerview:${v.RECYCLER_VERSION}",
+
+        NAVIGATION_FRAGMENT : "androidx.navigation:navigation-fragment-ktx:${v.NAVIGATION_VERSION}",
+        NAVIGATION_UI: "androidx.navigation:navigation-ui-ktx:${v.NAVIGATION_VERSION}"
 ]
 
 def misc = [
-        MIK3Y :                 "com.github.mik3y:usb-serial-for-android:3.3.0",
-        MATERIAL_DESIGN :       "com.google.android.material:material:1.4.0",
+        MATERIAL_DESIGN :       "com.google.android.material:material:1.3.0",
         ORHANOBUT :             "com.orhanobut:logger:2.2.0",
-        PERMISSION :            "com.permissionx.guolindev:permissionx:1.4.0",
+        DEXTER :                "com.karumi:dexter:6.2.2",
+        PERMISSION :            "com.github.AraujoJordan:ExcuseMe:0.9.5",
         THREETEN :              "com.jakewharton.threetenabp:threetenabp:1.3.1",
-        DIALOG  :               "com.github.chnouman:AwesomeDialog:1.0.5",
-        BOTTOMSHEET :           "com.github.Deishelon:RoundedBottomSheet:1.0.1",
-        LOTTIE :                "com.airbnb.android:lottie:3.7.0"
 ]
 
 def dagger = [

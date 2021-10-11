@@ -623,6 +623,14 @@ sealed class Resource<T>(val data: T?, val message: String?) {
     class Error<T>(message: String) : Resource<T>(null, message)
 }
 EOF
+cat << EOF >> Commons.kt
+package $_APP_PACKAGE.utils
+
+object Commons {
+
+
+}
+EOF
 
 cd $_APP_DIR
 cat << EOF >> $str3
@@ -640,6 +648,183 @@ class $str3a  : Application(){
         Logger.addLogAdapter(AndroidLogAdapter())
         Logger.i("APP OnCreate")
     }
+}
+EOF
+cd $_APP_DIR_PARENT
+rm build.gradle
+cat << EOF >> build.gradle
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+apply from: 'dependencies.gradle'
+
+buildscript {
+    apply from: "/dependencies.gradle"
+    ext {
+        kotlin_version = "1.5.30"
+    }
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:{deps.v.HILT_ANDROID_VERSION}"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:{deps.v.NAVIGATION_VERSION}"
+
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+EOF
+
+cd $_APP_DIR_PARENT/app
+rm build.gradle
+cat << EOF >> build.gradle
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+def cmd = 'git rev-list HEAD --count'
+def gitVersion = cmd.execute().text.trim().toInteger()
+
+
+android {
+    def versionMajor = 1
+    def versionMinor = 0
+    def versionPatch = 0
+
+    def versionBuild = gitVersion
+
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "$_APP_PACKAGE"
+        minSdkVersion 22
+        targetSdkVersion 30
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "APP_VERSION", "\"{versionMajor}.{versionMinor}.{versionPatch}-{versionBuild}\""
+        versionName ""
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+
+        debug {
+            debuggable true
+            zipAlignEnabled false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "BASE_URL", "\"https://api.example.com\""
+            buildConfigField "Boolean", "DEBUG_BUILD", "true"
+
+        }
+        release {
+            debuggable false
+            zipAlignEnabled false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+
+            buildConfigField "String", "BASE_URL", "\"https://api.example.com\""
+            buildConfigField "Boolean", "DEBUG_BUILD", "false"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    def deps = rootProject.ext.deps
+
+    //Androidx
+    implementation deps.androidx.ACTIVITY_KTX
+    implementation deps.androidx.APP_COMPAT
+    implementation deps.androidx.CORE_KTX
+    implementation deps.androidx.CONSTRAINT_LAYOUT
+    implementation deps.androidx.RECYCLER_VIEW
+
+    implementation deps.androidx.LIFECYCLE_VIEWMODEL
+    implementation deps.androidx.LIFECYCLE_RUNTIME
+    implementation deps.androidx.LIFECYCLE_EXTENSIONS
+    implementation deps.androidx.LIFECYCLE_LIVEDATA
+
+    implementation deps.androidx.NAVIGATION_FRAGMENT
+    implementation deps.androidx.NAVIGATION_UI
+
+
+    implementation deps.dagger.HILT_ANDROID
+    kapt deps.dagger.HILT_ANDROID_COMPILER
+
+    // Room
+    kapt deps.androidx.ROOM_COMPILER
+    implementation deps.androidx.ROOM_RUNTIME
+    implementation deps.androidx.ROOM_KTX
+    implementation deps.androidx.WORK_RUNTIME
+
+    //misc
+    implementation deps.misc.MATERIAL_DESIGN
+    implementation deps.misc.ORHANOBUT
+    implementation deps.misc.PERMISSION
+    implementation deps.misc.THREETEN
+
+    //Kotlin
+    implementation deps.kotlinlib.STD_LIB
+    implementation deps.kotlinlib.COROUTINES_CORE
+    implementation deps.kotlinlib.COROUTINES_ANDROID
+
+
+    // Retrofit
+    implementation deps.square.LOGGING_INTERCEPTOR
+    implementation deps.square.OKHTTP
+    implementation deps.square.RETROFIT
+    implementation deps.square.RETROFIT_MOSHI
+    implementation deps.square.RETROFIT_GSON
+
+
+    // Glide
+    kapt deps.glide.GLIDE_COMPILER
+    implementation deps.glide.GLIDE
+
+    // Chucker
+    debugImplementation deps.chucker.CHUCKER_DEBUG
+    releaseImplementation deps.chucker.CHUCKER_NO_OP_RELEASE
+}
+
+repositories {
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
 }
 EOF
 
